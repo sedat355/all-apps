@@ -3,10 +3,29 @@ import { getBooks } from "../utilities/getBooks";
 
 export const BooksContext = createContext();
 
-const BooksContextProvider = ({children}) => {
-  const [ books, setBooks ] = useState([])
+const initialState = [
+  {
+    "id": "KtIAbWKJNuelx8L2xZRwY",
+    "name": "Harry Potter"
+  },
+  {
+    "id": "UMA70pJEqQiHgeiWriEJ4",
+    "name": "Latin Amerika' nın Kesik Damarları"
+  },
+  {
+    "id": "8Cf6tjHKpSdmQnt2aqIMW",
+    "name": "Olasılıksız"
+  },
+  {
+    "name": "asdf asdf",
+    "id": "HmbOJ52OFWP4En9sLfAhR"
+  }
+]
 
-  const stableGetBooks = useCallback(getBooks, [])
+const BooksContextProvider = ({children}) => {
+  const [ books, setBooks ] = useState(initialState)
+
+  //const stableGetBooks = useCallback(getBooks, [])
   
   const addBook = async newBook => {
     const url = "http://localhost:3000/books"
@@ -73,7 +92,7 @@ const BooksContextProvider = ({children}) => {
     addBook,
     editBook,
     deleteBook,
-    stableGetBooks,
+    //stableGetBooks,
   }
 
   return(
