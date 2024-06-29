@@ -31,26 +31,40 @@ const BooksContextProvider = ({children}) => {
     setBooks([...books, newBook])
   }
 
-  // const addBook = async newBook => {
-  //   const url = "http://localhost:3000/books"
-  //   const options = {
-  //     method: "POST",
-  //     body: JSON.stringify(newBook),
-  //     headers: { "Content-Type": "application/json" },
-  //   }
-
-  //   const response = await fetch(url, options)
-  //   const data = await response.json()
-
-  //   console.log("data: ", data) //data:  {id: 'lfGcdTV9Z_kJB43junsbg', name: 'asdfaf'}
-
-  //   setBooks([...books, data])
-  // }
-
   const deleteBook = (id) => {
     setBooks(books.filter(book => book.id !== id))
   }
 
+  const editBook = (id, newName) => {
+    const newBooks = books.map( book => {
+      if( book.id === id ) {
+        return { ...book, name: newName }
+      }
+      return book;
+    })
+    setBooks(newBooks);
+  }
+
+  const values = {
+    books,
+    setBooks,
+    addBook,
+    editBook,
+    deleteBook,
+    //stableGetBooks,
+  }
+
+  return(
+    <BooksContext.Provider value={values}>
+      {children}
+    </BooksContext.Provider>
+  )
+}
+
+export default BooksContextProvider;
+
+
+//! Fonksiyonların json-server ile çalışan hali: (netlify' da json-server çalışmadığı için veriler state üzerinden işlenecek şekilde tekrar ayarlandı)
   // const deleteBook = async id => {
   //   const url = "http://localhost:3000/books/"
 
@@ -64,16 +78,7 @@ const BooksContextProvider = ({children}) => {
   //   setBooks(books.filter(book => book.id !== id))
   // }
 
-  const editBook = (id, newName) => {
-    const newBooks = books.map( book => {
-      if( book.id === id ) {
-        return { ...book, name: newName }
-      }
-      return book;
-    })
-    setBooks(newBooks);
-  }
-
+  
   // const editBook = async (id, newName) => {
   //   const url = "http://localhost:3000/books/"
 
@@ -104,20 +109,19 @@ const BooksContextProvider = ({children}) => {
   //   setBooks(bookList)
   // }
 
-  const values = {
-    books,
-    setBooks,
-    addBook,
-    editBook,
-    deleteBook,
-    //stableGetBooks,
-  }
 
-  return(
-    <BooksContext.Provider value={values}>
-      {children}
-    </BooksContext.Provider>
-  )
-}
+    // const addBook = async newBook => {
+  //   const url = "http://localhost:3000/books"
+  //   const options = {
+  //     method: "POST",
+  //     body: JSON.stringify(newBook),
+  //     headers: { "Content-Type": "application/json" },
+  //   }
 
-export default BooksContextProvider;
+  //   const response = await fetch(url, options)
+  //   const data = await response.json()
+
+  //   console.log("data: ", data) //data:  {id: 'lfGcdTV9Z_kJB43junsbg', name: 'asdfaf'}
+
+  //   setBooks([...books, data])
+  // }
